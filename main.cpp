@@ -12,13 +12,13 @@
  *
  * - add offset spaces on each cell to be aligned with the longest string in a cell
  *   + Measure and save the longest line of the column
- *   - Add offset accordingly to each other column cell
+ *   + Add offset accordingly to each other column cell
  * - print spacing characters on each row
  * - print spacing characters on each column
  *
  */
 
-#define NDEBUG
+//#define NDEBUG
 
 class Logger {
 public:
@@ -79,6 +79,8 @@ private:
 template <size_t ROWS, size_t COLUMNS>
 class ctable {
 public:
+    enum class Alignment { off = 0, center = 1, right = 2, left = 3 };
+
     template <typename... Columns>
     void add_row(Columns... columns) {
         static_assert(sizeof...(columns) <= COLUMNS,
@@ -102,13 +104,14 @@ public:
 
         if(data_.empty())
             return;
-        const size_t n_extra_horizontal_symbs = ROWS + (1); // 1 for the last
+
+        size_t n_extra_horizontal_symbs = COLUMNS + (1);    // 1 for the last
+        n_extra_horizontal_symbs += (2 * cell_space_margin_) * COLUMNS;
 
         for(size_t row = 0; row < data_.size(); ++row) {
 
             print_n_horizontal_symobols_(length_of_the_longest_row_ + n_extra_horizontal_symbs);
             new_line_();
-
             print_n_vertical_symobols_(1);
 
             for(size_t col = 0; col < data_[row].size(); ++col) {
@@ -116,16 +119,40 @@ public:
                 const auto cell = data_[row][col];
                 const auto longest_cell = longest_cell_in_column[col];
 
+                auto cell_size = cell.size();
+
+                size_t cell_extra_margin = (longest_cell - cell_size);
+                int grow_by = (cell_extra_margin % 2 != 0) ? 1 : 0;
+                size_t spaces_count = (cell_extra_margin / 2) + grow_by;
+                // size_t spaces_count = (cell_extra_margin);
+                // size_t spaces_count = 0;
+
+                // TODO(rstelmac): Optimize this
+                size_t spaces_before = spaces_count;
+                size_t spaces_after = spaces_count;
+
+                if(alignment_ == Alignment::center) {
+                    // If the cell is even, then it will ruin the alignment, so we try to
+                    // float the cell to the left, in order to do that, don't add that extra
+                    // space in the cell, that way we will keep all the cells consitent
+                    if(cell_extra_margin > 0 && (cell_extra_margin % 2 != 0)) {
+                        spaces_before--;
+                        grow_by = 0;
+                    }
+                }
+
                 if(cell.empty()) {
-                    print_n_spaces_(longest_cell);
+                    // Just print spaces (or any other symobl)
+                    print_n_spaces_(longest_cell + (2 * cell_space_margin_) + grow_by);
                     print_n_vertical_symobols_(1);
                     continue;
                 }
 
-                auto cell_size = cell.size();
-                
-                printf("%s", cell.c_str());
-                print_n_spaces_((longest_cell - cell_size));
+                // Add some margin (if any) before the contect and after the contect
+                print_n_spaces_(cell_space_margin_ + spaces_before);
+                printf("%s", cell.c_str(), longest_cell);
+                print_n_spaces_(cell_space_margin_ + spaces_after);
+
                 print_n_vertical_symobols_(1);
             }
 
@@ -136,18 +163,18 @@ public:
     }
 
     void print_log_info() {
-        logger_.debug("call - log_info()\n");
+        // logger_.debug("call - log_info()\n");
         for(size_t i = 0; i < longest_cell_in_column.size(); ++i) {
-            logger_.debug("row: (%d) the size of the longset cell is: (%zu)\n", i,
+            logger_.debug("column: (%d) the size of the longset cell is: (%zu)\n", i,
                           longest_cell_in_column[i]);
         }
     }
 
 private:
     Logger logger_;
-
-    std::array<std::array<std::string, ROWS>, COLUMNS> data_;
-    std::array<size_t, ROWS> longest_cell_in_column{};
+    // TODO: this is reversed
+    std::array<std::array<std::string, COLUMNS>, ROWS> data_;
+    std::array<size_t, COLUMNS> longest_cell_in_column{0};
 
     char vertical_split_symobl_ = '|';
     char horizontal_split_symobl_ = '-';
@@ -160,6 +187,10 @@ private:
     size_t current_row_index_{0};
 
     size_t length_of_the_longest_row_{0};
+
+    size_t cell_space_margin_{2};
+
+    Alignment alignment_{Alignment::center};
 
     void print_space_() {
         printf(" ");
@@ -194,8 +225,14 @@ private:
         const size_t offset = (row_insertion_initial_size_ != 1) ? 1 : 0;
         const size_t array_coll_index = row_insertion_initial_size_ - index - offset;
 
+        auto cell_size_with_offset = cell.size();
+
+        if(alignment_ == Alignment::center) {
+            cell_size_with_offset += (cell_size_with_offset % 2 == 0) ? 1 : 0;
+        }
+
         longest_cell_in_column[array_coll_index] =
-            std::max(longest_cell_in_column[array_coll_index], cell.size());
+            std::max(longest_cell_in_column[array_coll_index], cell_size_with_offset);
 
         data_[current_row_index_][array_coll_index] = cell;
 
@@ -235,18 +272,19 @@ int main() {
      *
      */
 
-    ctable<4, 4> table;
+    ctable<13, 12> table;
 
     table.add_row("col", "onetwothree", "twelve", "sixs");    // 11 is the longest (1)
     table.add_row("column5", "column6666");                   // 10 is the longest (1)
     table.add_row("column7");                                 // 7 is the longest (0)
-    table.add_row("six", "a", "b", "c");                      // 3 is the longest (0)
+    table.add_row("six", "a", "b", "c-this-is-big-one");      // 3 is the longest (0)
+    // table.add_row("","","","","","hello","","");      // 3 is the longest (0)
 
     table.print();
 
     std::cout << '\n';
 
-    // table.print_log_info();
+    table.print_log_info();
 
 
     return 0;
