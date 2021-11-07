@@ -108,9 +108,10 @@ public:
         size_t n_extra_horizontal_symbs = COLUMNS + (1);    // 1 for the last
         n_extra_horizontal_symbs += (2 * cell_space_margin_) * COLUMNS;
 
-        for(size_t row = 0; row < data_.size(); ++row) {
+        print_n_horizontal_symobols_(length_of_the_longest_row_ + n_extra_horizontal_symbs,
+                                     first_horizontal_border_symbol_);
 
-            print_n_horizontal_symobols_(length_of_the_longest_row_ + n_extra_horizontal_symbs);
+        for(size_t row = 0; row < data_.size(); ++row) {
             new_line_();
             print_n_vertical_symobols_(1);
 
@@ -124,8 +125,6 @@ public:
                 size_t cell_extra_margin = (longest_cell - cell_size);
                 int grow_by = (cell_extra_margin % 2 != 0) ? 1 : 0;
                 size_t spaces_count = (cell_extra_margin / 2) + grow_by;
-                // size_t spaces_count = (cell_extra_margin);
-                // size_t spaces_count = 0;
 
                 // TODO(rstelmac): Optimize this
                 size_t spaces_before = spaces_count;
@@ -150,16 +149,22 @@ public:
 
                 // Add some margin (if any) before the contect and after the contect
                 print_n_spaces_(cell_space_margin_ + spaces_before);
-                printf("%s", cell.c_str(), longest_cell);
+                printf("%s", cell.c_str());
                 print_n_spaces_(cell_space_margin_ + spaces_after);
 
                 print_n_vertical_symobols_(1);
             }
-
             new_line_();
+
+            // Don't print the last border here, it will taken care outside the loop
+            if(row != data_.size() - 1) {
+                print_n_horizontal_symobols_(length_of_the_longest_row_ + n_extra_horizontal_symbs,
+                                             horizontal_split_symobl_);
+            }
         }
 
-        print_n_horizontal_symobols_(length_of_the_longest_row_ + n_extra_horizontal_symbs);
+         print_n_horizontal_symobols_(length_of_the_longest_row_ + n_extra_horizontal_symbs,
+         last_horizintal_border_symbol_);
     }
 
     void print_log_info() {
@@ -177,7 +182,10 @@ private:
     std::array<size_t, COLUMNS> longest_cell_in_column{0};
 
     char vertical_split_symobl_ = '|';
-    char horizontal_split_symobl_ = '-';
+    char horizontal_split_symobl_ = '.';
+    char first_horizontal_border_symbol_ = '-';
+    char last_horizintal_border_symbol_ = '-';
+
 
     // Keeps track of the row_insertion size, upon add_row call
     // It will reset every time on row_call invocation
@@ -244,9 +252,9 @@ private:
         return (longest_cell_in_column[array_coll_index] - cell.size()) + cell.size();
     }
 
-    void print_n_horizontal_symobols_(size_t n) {
+    void print_n_horizontal_symobols_(size_t n, char symbol) {
         for(size_t i = 0; i < n; ++i) {
-            printf("%c", horizontal_split_symobl_);
+            printf("%c", symbol);
         }
     }
 
@@ -272,13 +280,17 @@ int main() {
      *
      */
 
-    ctable<13, 12> table;
+    ctable<7, 5> table;
 
-    table.add_row("col", "onetwothree", "twelve", "sixs");    // 11 is the longest (1)
-    table.add_row("column5", "column6666");                   // 10 is the longest (1)
-    table.add_row("column7");                                 // 7 is the longest (0)
-    table.add_row("six", "a", "b", "c-this-is-big-one");      // 3 is the longest (0)
-    // table.add_row("","","","","","hello","","");      // 3 is the longest (0)
+    table.add_row("Name", "Last Name", "Phone Number", "City", "Address");
+    table.add_row("Orestis", "Stelmach", "111-222-333", "Dublin", "Clontarf");
+    table.add_row("Anastasia", "Kourti", "333-111-234", "Dublin", "Clontarf");
+
+    // There is a bug in the printing with this particular line
+    table.add_row("Jeff", "Martins", "", "456-3234", "New Jersy");
+    table.add_row("George", "Stef", "","Mnj. Avene");
+    //table.add_row("Tania", "Anastasiou", "123-456-789","Nea Moudania", "Eleonas");
+    //table.add_row("Alexa", "Amazno");
 
     table.print();
 
