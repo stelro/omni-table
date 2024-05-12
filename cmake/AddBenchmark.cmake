@@ -30,8 +30,8 @@ function(add_benchmark test_name test_file)
     include_directories(${includes})
     add_executable(${test_name} ${test_file})
     target_include_directories(${test_name} PRIVATE ${BENCHMARK_PATH}/include)
-    target_link_libraries(${test_name} ${libraries})
-    target_link_libraries(${test_name} PRIVATE Threads::Threads${libraries})
+    #target_link_libraries(${test_name} ${libraries})
+    target_link_libraries(${test_name} PRIVATE Threads::Threads ${libraries})
     target_link_libraries(${test_name} PRIVATE ${BENCHMARK_PATH}/lib/libbenchmark.a)
     target_compile_options(${test_name} PUBLIC
         -Wno-unused-parameter
