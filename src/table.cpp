@@ -65,15 +65,15 @@ Table::Context Table::prepare_for_printing_() {
     }
 
     ctx.longest_row =
-        std::accumulate(columns_sizes_.begin(), columns_sizes_.end(), 0, [&](size_t a, size_t b) {
+        std::accumulate(columns_sizes_.begin(), columns_sizes_.end(), 0uz, [&](size_t a, size_t b) {
             // Add one extra byte for the vertical border line
             // Add left and right spacing in each cell
-            return (a + b) + 1 + default_left_spacing_ + default_right_spacing_;
+            return (a + b) + 1uz + default_left_spacing_ + default_right_spacing_;
         });
 
     std::cout << "ctx.longest_row: " << ctx.longest_row << '\n';
 
-    return std::move(ctx);
+    return ctx;
 }
 
 void Table::adjust_spacing_for_alignment_(size_t total_padding, size_t &left_spacing,
