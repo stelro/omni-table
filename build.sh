@@ -2,6 +2,7 @@
 
 clean_build=1
 dev_only=0
+rel_only=0
 run_tests=0
 
 parse_arguments() {
@@ -14,6 +15,11 @@ parse_arguments() {
                 ;;
             --dev)
                 dev_only=1
+                clean_build=0
+                shift
+                ;;
+            --rel)
+                rel_only=1
                 clean_build=0
                 shift
                 ;;
@@ -38,11 +44,12 @@ clean_artifacts() {
 
 # Function to build the project with specified build type
 build_project() {
-    echo "*** Start building target $build_name ***"
     local build_type=$1
     local build_name=$2
     local build_params=$3
     local start_time=$(date +%s)
+
+    echo "*** Start building target $build_name ***"
 
     if [ $clean_build -eq 1 ]; then
         clean_artifacts $build_name
@@ -91,6 +98,8 @@ if [ $dev_only -eq 1 ]; then
     build_project Debug debug "-DENABLE_SANITIZER_ADDRESS=ON"
 elif [ $run_tests -eq 1 ]; then
     run_unit_tests
+elif [ $rel_only -eq 1 ]; then
+    build_project Release release
 else
     # debug build is by default built as asan
     build_project Release release
