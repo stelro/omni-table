@@ -7,10 +7,30 @@
 
 namespace gctable {
 
-Row &Table::operator[](size_t index) {
-    if (index >= rows_.size()) {
-        rows_.resize(index + 1);
+void Table::shrink_to_fit() {
+    // TODO: this is broken as of now, but will be fixed in later submissions once
+    // we replace the resize with reverse (in grow_if_needed_ function).
+    if (capacity_ > number_of_rows_) {
+        capacity_ = number_of_rows_;
     }
+}
+
+size_t Table::get_new_capacity_(size_t current_capacity) noexcept {
+    return (current_capacity > 0) ? ( current_capacity << 1) : 1;
+}
+
+void Table::grow_if_needed_() {
+    if ((number_of_rows_ + 1) > capacity_) {
+        capacity_ = get_new_capacity_(capacity_);
+        // TODO: We use resize rather than reverse, because we want the empty rows
+        // to be initialized. This has to be fixed in later submissions.
+        rows_.resize(capacity_ + 1);
+    }
+}
+
+Row &Table::operator[](size_t index) {
+    grow_if_needed_();
+    number_of_rows_++;
     return rows_[index];
 }
 

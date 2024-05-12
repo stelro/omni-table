@@ -11,6 +11,7 @@ struct Cell {
     Cell(std::string_view c) : content(c.data()) {}
     Cell(const char *c) : content(c) {}
     Cell(int c) : content(std::to_string(c)) {}
+    Cell(size_t c) : content(std::to_string(c)) {}
     Cell(float c) : content(std::to_string(c)) {}
     Cell(double c) : content(std::to_string(c)) {}
 

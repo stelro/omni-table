@@ -1,4 +1,8 @@
 add_gtest(
-    SimpleTest 
-    SimpleTest.t.cpp
+    TableTest 
+    TableTest.t.cpp
+    LIB
+    gc-table
+    INCLUDES
+    ${CMAKE_SOURCE_DIR}/src
 )

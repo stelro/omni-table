@@ -44,7 +44,6 @@ inline BorderStyle operator&(BorderStyle lhs, BorderStyle rhs) {
 static constexpr auto vertical_spacing = '|';
 static constexpr auto horizontal_spacing = '-';
 
-
 class Table {
 public:
     Row &operator[](size_t index);
@@ -54,18 +53,32 @@ public:
     void set_alignment(Alignment alignment) noexcept { table_default_alignment_ = alignment; }
     void set_border_style(BorderStyle border_style) noexcept { table_border_style_ = border_style; }
 
+    size_t size() const noexcept { return number_of_rows_; }
+    size_t capacity() const noexcept { return capacity_; }
+    void shrink_to_fit();
+
 private:
     struct Context {
-        size_t longest_row{0};
-        size_t nr_of_rows{0};
-        size_t nr_of_all_columns{0};
+        size_t longest_row {0};
+        size_t nr_of_rows {0};
+        size_t nr_of_all_columns {0};
     };
 
+private:
     Context prepare_for_printing_();
 
     void print_horizontal_border_line(size_t length, bool include_new_line = true) const;
     void adjust_spacing_for_alignment_(size_t total_padding, size_t &left_spacing,
                                        size_t &right_spacing);
+
+    size_t get_new_capacity_(size_t current_capacity) noexcept;
+    void grow_if_needed_();
+
+    size_t number_of_rows_ {0};
+    // Rows capacity
+    size_t capacity_ {0};
+
+    
 
     size_t default_left_spacing_{1};
     size_t default_right_spacing_{1};
@@ -75,6 +88,7 @@ private:
 
     Alignment table_default_alignment_{Alignment::center};
     BorderStyle table_border_style_{BorderStyle::full_border};
+
 };
 
 } // namespace cctable
