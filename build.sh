@@ -73,7 +73,7 @@ build_project() {
 run_unit_tests() {
     echo "Running unit tests..."
 
-    for dir in build/debug/src/protocol/testing build/debug/src/client/testing build/debug/src/server/testing; do
+    for dir in build/debug/tests; do
         if [ -d "$dir" ]; then
             echo "Running tests in $dir..."
             (cd "$dir" && ctest . -V)
