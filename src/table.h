@@ -1,4 +1,7 @@
-#pragma once
+#ifndef GC_TABLE_TABLE_H_
+#define GC_TABLE_TABLE_H_
+
+#include "row.h"
 
 #include <string>
 #include <string_view>
@@ -17,7 +20,7 @@
  *	cell 4 | cell 5 | cell 6 |
  */
 
-namespace cctable {
+namespace gctable {
 
 enum class Alignment { center, left, right };
 
@@ -41,28 +44,6 @@ inline BorderStyle operator&(BorderStyle lhs, BorderStyle rhs) {
 static constexpr auto vertical_spacing = '|';
 static constexpr auto horizontal_spacing = '-';
 
-struct Cell {
-    Cell() = default;
-    Cell(const std::string &c) : content(c) {}
-    Cell(std::string_view c) : content(c.data()) {}
-    Cell(const char *c) : content(c) {}
-    Cell(int c) : content(std::to_string(c)) {}
-    Cell(float c) : content(std::to_string(c)) {}
-    Cell(double c) : content(std::to_string(c)) {}
-
-    std::string content;
-};
-
-struct Row {
-public:
-    Cell &operator[](size_t index);
-    void print() const;
-
-    std::vector<Cell> get_cells() const;
-
-public:
-    std::vector<Cell> cells;
-};
 
 class Table {
 public:
@@ -97,3 +78,6 @@ private:
 };
 
 } // namespace cctable
+
+#endif // GC_TABLE_TABLE_H_
+

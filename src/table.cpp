@@ -5,23 +5,7 @@
 #include <numeric>
 #include <string>
 
-namespace cctable {
-
-Cell &Row::operator[](size_t index) {
-
-    if (index >= cells.size()) {
-        cells.resize(index + 1);
-    }
-    return cells[index];
-}
-
-std::vector<Cell> Row::get_cells() const { return cells; }
-
-void Row::print() const {
-    for (const auto &i : cells) {
-        std::cout << i.content << " ";
-    }
-}
+namespace gctable {
 
 Row &Table::operator[](size_t index) {
     if (index >= rows_.size()) {
