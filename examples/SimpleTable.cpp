@@ -2,7 +2,7 @@
 
 #include "table.h"
 
-using namespace cctable;
+using namespace gctable;
 
 int main() {
 
