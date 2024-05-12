@@ -43,11 +43,12 @@ enable_testing()
 
 add_subdirectory(benchmark_test)
 add_subdirectory(tests)
+add_subdirectory(examples)
 
 # testing
 add_subdirectory(external/gtest)
 
-add_executable(gc-table src/main.cpp src/table.cpp)
+add_library(gc-table STATIC src/main.cpp src/table.cpp)
 target_link_libraries(gc-table PRIVATE project_warnings)
 
 if (ENABLE_SANITIZER_ADDRESS)
