@@ -104,8 +104,7 @@ void Table::print() {
     std::cout << "nr_of_rows: " << ctx.nr_of_rows << std::endl;
     std::cout << "nr_of_cells: " << ctx.nr_of_all_columns << std::endl;
 
-    if (table_border_style_ & BorderStyle::full_border)
-        print_horizontal_border_line(border_length);
+    print_horizontal_border_line(border_length);
 
     for (size_t row = 0; row < ctx.nr_of_rows; ++row) {
 
