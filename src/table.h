@@ -63,7 +63,7 @@ private:
 
     Context prepare_for_printing_();
 
-    void print_horizontal_border_line(size_t length, bool include_new_line = true) const;
+    void print_horizontal_border_line_(size_t length, bool include_new_line = true) const;
     void adjust_spacing_for_alignment_(size_t total_padding, size_t &left_spacing,
                                        size_t &right_spacing);
 
