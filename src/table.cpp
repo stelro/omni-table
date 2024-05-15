@@ -29,6 +29,25 @@ void Table::print_horizontal_border_line_(size_t length, bool include_new_line) 
     }
 }
 
+void Table::print_horizontal_line_with_divider_(char divider, bool include_new_line) const {
+
+    std::putc(divider, stdout);
+    auto pad = default_left_spacing_ + default_right_spacing_;
+    for (const auto& col_length : columns_sizes_) {
+        for (size_t i = 0; i < (col_length + pad); i++) {
+            std::putc(horizontal_spacing, stdout);
+            if ((i + 1) == (col_length + pad)) {
+                std::putc(divider, stdout);
+            }
+        }
+    }
+
+    if (include_new_line) {
+        std::cout << '\n';
+    }
+}
+
+
 Table::Context Table::prepare_for_printing_() {
 
     Context ctx;
@@ -89,18 +108,16 @@ void Table::adjust_spacing_for_alignment_(size_t total_padding, size_t &left_spa
 void Table::print() {
 
     const Context ctx = prepare_for_printing_();
+    
+    print_horizontal_line_with_divider_();
 
-    // Add one extra byte for the border line at the beginning of the row
-    size_t border_length = ctx.longest_row + 1;
-
-    std::cout << "nr_of_rows: " << ctx.nr_of_rows << std::endl;
-    std::cout << "nr_of_cells: " << ctx.nr_of_all_columns << std::endl;
-
-    print_horizontal_border_line_(border_length);
+    std::vector<std::vector<size_t>> vecs;
 
     for (size_t row = 0; row < ctx.nr_of_rows; ++row) {
 
         auto cells = rows_[row].get_cells();
+
+        std::vector<size_t> format_cross_position (ctx.nr_of_all_columns);
 
         std::cout << vertical_spacing;
         for (size_t cell = 0; cell < ctx.nr_of_all_columns; ++cell) {
@@ -116,18 +133,20 @@ void Table::print() {
 
                 std::cout << std::string(left_spacing, ' ') << cells[cell].content
                           << std::string(right_spacing, ' ');
+                format_cross_position[cell] = context_size + left_spacing + right_spacing;
             } else {
                 std::cout << std::string(columns_sizes_[cell] + left_spacing + right_spacing, ' ');
+                format_cross_position[cell] = columns_sizes_[cell] + left_spacing + right_spacing;
+
             }
 
             std::cout << vertical_spacing;
-        }
+
+        } // for cells
 
         std::cout << "\n";
-        print_horizontal_border_line_(border_length);
-    }
-    //print_horizontal_border_line_(border_length);
-
+        print_horizontal_line_with_divider_();
+    } // for rows
 }
 
 } // namespace cctable

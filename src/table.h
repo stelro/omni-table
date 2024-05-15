@@ -63,6 +63,7 @@ private:
 
     Context prepare_for_printing_();
 
+    void print_horizontal_line_with_divider_(char divider = '+', bool include_new_line = true) const;
     void print_horizontal_border_line_(size_t length, bool include_new_line = true) const;
     void adjust_spacing_for_alignment_(size_t total_padding, size_t &left_spacing,
                                        size_t &right_spacing);
@@ -71,6 +72,10 @@ private:
     size_t default_right_spacing_{1};
 
     std::vector<Row> rows_;
+
+    // Keep track of the largest (length in context) column size for each row.
+    // This is useful to adjust spacing and padding in each column for that row.
+    // We maybe can optimize this and avoid that extra std::vector.
     std::vector<size_t> columns_sizes_;
 
     Alignment table_default_alignment_{Alignment::center};
