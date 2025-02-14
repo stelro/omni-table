@@ -7,15 +7,19 @@
 
 namespace gctable {
 
-struct Row {
+class Row {
 public:
+	// Automatically resizes if index is out of range.
     Cell &operator[](size_t index);
-    void print() const;
+    
 
-    std::vector<Cell> get_cells() const;
+    const std::vector<Cell>& get_cells() const { return cells_; };
+	std::vector<Cell>& get_cells() { return cells_; }
 
-public:
-    std::vector<Cell> cells;
+	// TODO: (Optional) A simple print function; printing is now mainly handled by Table.
+	void print() const;
+private:
+    std::vector<Cell> cells_;
 };
 
 } // namespace gctable

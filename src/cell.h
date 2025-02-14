@@ -8,7 +8,7 @@ namespace gctable {
 struct Cell {
     Cell() = default;
     Cell(const std::string &c) : content(c) {}
-    Cell(std::string_view c) : content(c.data()) {}
+    Cell(std::string_view c) : content(c) {}
     Cell(const char *c) : content(c) {}
     Cell(int c) : content(std::to_string(c)) {}
     Cell(float c) : content(std::to_string(c)) {}

@@ -13,6 +13,8 @@ int main() {
     // table.set_alignment(Alignment::left);
     // table.set_alignment(Alignment::right);
     table.set_alignment(Alignment::center);
+	table.set_max_column_width(10);
+	table.enable_border_color("\033[31m", "\033[0m");
 
     // Header
     table[0][0] = "No";
@@ -39,14 +41,14 @@ int main() {
 
     table[3][0] = 3;
     table[3][1] = "Ford";
-    table[3][2] = "Mustang";
+    table[3][2] = "Mustang XXL The best";
     table[3][3] = 2019;
     table[3][4] = 310;
     table[3][5] = "$26,670";
 
     table[4][0] = 4;
-    table[4][1] = "Chevrolet";
-    table[4][2] = "Silverado";
+    table[4][1] = "Chevrolet Camaro";
+    table[4][2] = "Silverado orestis is the best";
     table[4][3] = 2021;
     table[4][4] = 355;
     table[4][5] = "$36,195";
