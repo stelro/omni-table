@@ -54,6 +54,7 @@ target_sources(gc-table PRIVATE
     src/table.cpp
     src/cell.cpp
     src/row.cpp
+	src/formatter.cpp
     )
 
 target_link_libraries(gc-table PRIVATE project_warnings)

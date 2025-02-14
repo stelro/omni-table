@@ -1,5 +1,4 @@
-#ifndef GC_TABLE_CELL_H_
-#define GC_TABLE_CELL_H_
+#pragma once
 
 #include <string>
 
@@ -18,5 +17,3 @@ struct Cell {
 };
 
 } // namespace gctable
-
-#endif // GC_TABLE_CELL_H_

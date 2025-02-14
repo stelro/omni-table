@@ -1,20 +1,23 @@
 #include <iostream>
 
 #include "table.h"
+#include "formatter.h"
 
 using namespace gctable;
 
 int main() {
 
+	// tabluxe
+	// omni-table
+
+
     std::cout << "\n\n\n";
 
     Table table;
 
-    // table.set_alignment(Alignment::left);
-    // table.set_alignment(Alignment::right);
     table.set_alignment(Alignment::center);
 	table.set_max_column_width(10);
-	table.enable_border_color("\033[31m", "\033[0m");
+	table.enable_border_style(format::style::red | format::style::faint);
 	table.enable_vertical_centering(true);
 
     // Header
@@ -24,6 +27,7 @@ int main() {
     table[0][3] = "Year";
     table[0][4] = "Hp";
     table[0][5] = "Price";
+    table[0][6] = "";
    
     // Cars table
     table[1][0] = 1;
@@ -88,6 +92,8 @@ int main() {
     table[9][3] = 2021;
     table[9][4] = 147;
     table[9][5] = "$19,650";
+
+    table[10][0] = "";
 
     table.print();
 

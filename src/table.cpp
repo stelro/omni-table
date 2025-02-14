@@ -94,7 +94,7 @@ void Table::print_horizontal_line_(const Context& ctx, bool include_new_line) co
 	if (table_border_style_ == BorderStyle::none) return;
 
 	if (use_color_border_) {
-		std::cout << border_color_prefix_;
+		std::cout << style_formatter_.get_style_prefix();
 	}
 
 	std::cout << border_intersection_;
@@ -107,7 +107,7 @@ void Table::print_horizontal_line_(const Context& ctx, bool include_new_line) co
 	}
 
 	if (use_color_border_) {
-		std::cout << border_color_suffix_;
+		std::cout << style_formatter_.get_style_suffix();
 	}
 
 	if (include_new_line) {
@@ -207,11 +207,11 @@ void Table::print() {
 		for (std::size_t line_index = 0; line_index < row_height; ++line_index) {
 
 			if (use_color_border_) {
-				std::cout << border_color_prefix_;
+				std::cout << style_formatter_.get_style_prefix();
 			}
 			std::cout << border_vertical_;
 			if (use_color_border_) {
-				std::cout << border_color_suffix_;
+				std::cout << style_formatter_.get_style_suffix();
 			}
 			
 			for (std::size_t col = 0; col < ctx.number_of_all_columns; ++col) {
@@ -242,11 +242,11 @@ void Table::print() {
 					<< std::string(default_right_spacing_, ' ');
 
 				if (use_color_border_) {
-					std::cout << border_color_prefix_;
+					std::cout << style_formatter_.get_style_prefix();
 				}
 				std::cout << border_vertical_;
 				if (use_color_border_) {
-					std::cout << border_color_suffix_;
+					std::cout << style_formatter_.get_style_suffix();
 				}
 
 			}

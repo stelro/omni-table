@@ -1,7 +1,7 @@
-#ifndef GC_TABLE_TABLE_H_
-#define GC_TABLE_TABLE_H_
+#pragma once
 
 #include "row.h"
+#include "formatter.h"
 
 #include <string>
 #include <vector>
@@ -64,11 +64,10 @@ public:
         border_intersection_ = intersection;
     }
 
-    // Enable ANSI color for borders (supply prefix and suffix strings)
-    void enable_border_color(const std::string &prefix, const std::string &suffix) {
+    // Enable ANSI color and modifiers for borders (supply format::style)
+    void enable_border_style(format::style style) {
         use_color_border_ = true;
-        border_color_prefix_ = prefix;
-        border_color_suffix_ = suffix;
+		style_formatter_.add_style(style);
     }
 
 	void enable_vertical_centering(bool enabled) noexcept { vertical_centering_enabled_ = enabled; }
@@ -109,14 +108,11 @@ private:
 
     // ANSI color for borders
 	bool use_color_border_ {false};
-	std::string border_color_prefix_ {""};
-	std::string border_color_suffix_ {""};
+	format::Formatter style_formatter_;
 
 	bool vertical_centering_enabled_ {false};
     
 };
 
 } // namespace cctable
-
-#endif // GC_TABLE_TABLE_H_
 
