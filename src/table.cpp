@@ -216,9 +216,15 @@ void Table::print() {
 			
 			for (std::size_t col = 0; col < ctx.number_of_all_columns; ++col) {
 
-				//std::size_t left_spacing = default_left_spacing_;
-				//std::size_t right_spacing = default_right_spacing_;
-				const std::string& cell_line = (line_index < cell_lines[col].size() ? cell_lines[col][line_index]: "");
+				// compute vertical offset for vertical centering, if enabled
+				std::size_t offset = 0;
+				if (vertical_centering_enabled_) {
+					offset = (row_height > cell_lines[col].size() ? (row_height - cell_lines[col].size()) / 2 : 0);
+				}
+
+				const std::string& cell_line =
+					(line_index >= offset && (line_index - offset) < cell_lines[col].size())
+					? cell_lines[col][line_index - offset] : "";
 				const std::size_t content_length = cell_line.size();
 				const std::size_t total_padding = (ctx.column_widths[col] > content_length ? ctx.column_widths[col] - content_length : 0);
 				

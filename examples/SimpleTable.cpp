@@ -15,6 +15,7 @@ int main() {
     table.set_alignment(Alignment::center);
 	table.set_max_column_width(10);
 	table.enable_border_color("\033[31m", "\033[0m");
+	table.enable_vertical_centering(true);
 
     // Header
     table[0][0] = "No";

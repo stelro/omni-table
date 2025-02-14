@@ -54,7 +54,7 @@ public:
 	// Set border style 
     void set_border_style(BorderStyle border_style) noexcept { table_border_style_ = border_style; }
 	// Set a fixed maximum width for columns. Zero means "no limit" (columns use the widest cell)
-	void set_max_column_width(size_t width) noexcept { max_column_width_ = width; }
+	void set_max_column_width(std::size_t width) noexcept { max_column_width_ = width; }
 	// Set custom border characters
     void set_border_chars(const std::string &vertical,
                           const std::string &horizontal,
@@ -71,10 +71,12 @@ public:
         border_color_suffix_ = suffix;
     }
 
+	void enable_vertical_centering(bool enabled) noexcept { vertical_centering_enabled_ = enabled; }
+
 private:
     struct Context {
-        size_t number_of_rows {0};
-        size_t number_of_all_columns {0};
+		std::size_t number_of_rows {0};
+		std::size_t number_of_all_columns {0};
 
 		// Effective width for each column after wrapping
 		std::vector<size_t> column_widths;
@@ -89,8 +91,8 @@ private:
     void adjust_spacing_for_alignment_(size_t total_padding, size_t &left_spacing, size_t &right_spacing);
 
 	// Default spacing inside each cell
-    size_t default_left_spacing_ {1};
-    size_t default_right_spacing_ {1};
+	std::size_t default_left_spacing_ {1};
+	std::size_t default_right_spacing_ {1};
 
 	std::vector<Row> rows_;
 
@@ -98,7 +100,7 @@ private:
 	BorderStyle table_border_style_ {BorderStyle::full};
 
     // Maximum column width. If nonzero, cells wider than this will be wrapped
-	size_t max_column_width_ {0};
+	std::size_t max_column_width_ {0};
 
 	// Custom border characters
 	std::string border_vertical_ {"|"};
@@ -109,6 +111,8 @@ private:
 	bool use_color_border_ {false};
 	std::string border_color_prefix_ {""};
 	std::string border_color_suffix_ {""};
+
+	bool vertical_centering_enabled_ {false};
     
 };
 
