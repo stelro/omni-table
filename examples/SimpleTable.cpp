@@ -28,6 +28,10 @@ int main() {
     table[0][4] = "Hp";
     table[0][5] = "Price";
     table[0][6] = "";
+	
+	// Apply custom style to the whole row
+	table[0].set_row_style(format::style::green | format::style::bold);
+
    
     // Cars table
     table[1][0] = 1;
@@ -58,13 +62,16 @@ int main() {
     table[4][4] = 355;
     table[4][5] = "$36,195";
 
+	table[4].set_row_style(format::style::magenta | format::style::faint);
+
     table[5][0] = 5;
     table[5][1] = "BMW";
     table[5][2] = "3 Series";
     table[5][3] = 2022;
     table[5][4] = 255;
     table[5][5] = "$41,450";
-
+	
+	table[6].set_row_style(format::style::cyan);
     table[6][0] = 6;
     table[6][1] = "Audi";
     table[6][2] = "A4";

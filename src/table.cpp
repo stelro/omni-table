@@ -188,6 +188,9 @@ void Table::print() {
 		
 		const auto& cells = rows_[row_index].get_cells();
 
+		// format each row individually
+		const auto row_formatter = rows_[row_index].get_formatter();
+
 		// for each column in the row, get the wrapped lines
 		std::vector<std::vector<std::string>> cell_lines(ctx.number_of_all_columns);
 		std::size_t row_height = 0;
@@ -235,11 +238,13 @@ void Table::print() {
 				std::string padded = cell_line;
 				padded.append(ctx.column_widths[col] - content_length, ' ');
 
-				std::cout << std::string(default_right_spacing_, ' ')
+				std::cout << row_formatter.get_style_prefix()
+					<< std::string(default_right_spacing_, ' ')
 					<< std::string(cell_left_pad, ' ')
 					<< cell_line 
 					<< std::string(cell_right_pad, ' ')
-					<< std::string(default_right_spacing_, ' ');
+					<< std::string(default_right_spacing_, ' ')
+					<< row_formatter.get_style_suffix();
 
 				if (use_color_border_) {
 					std::cout << style_formatter_.get_style_prefix();
