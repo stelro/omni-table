@@ -43,7 +43,6 @@ constexpr auto to_underlying(E e) noexcept {
 
 class Formatter {
 public:
-
 	void add_style(style s) {
 		flags_ |= to_underlying(s);
 		compute_style_prefix_();
@@ -55,7 +54,7 @@ public:
 private:
 	using underlying_t = std::underlying_type_t<style>;
 	underlying_t flags_ {0};
-	const std::string suffix_ {"\033[0m"};
+	std::string suffix_ {"\033[0m"};
 	std::string prefix_;
 
 	void compute_style_prefix_();

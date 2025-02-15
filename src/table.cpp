@@ -206,6 +206,12 @@ void Table::print() {
 			row_height = std::max(row_height, cell_lines[col].size());
 		}
 
+		std::vector<std::pair<bool, format::Formatter>> cell_formatters(ctx.number_of_all_columns);
+		for (std::size_t col = 0; col < ctx.number_of_all_columns; ++col) {
+			if (col < cells.size())
+				cell_formatters[col] = {cells[col].style_formatter_set, cells[col].style_formatter_};
+		}
+
 		// print each "line" of the row
 		for (std::size_t line_index = 0; line_index < row_height; ++line_index) {
 
@@ -237,14 +243,20 @@ void Table::print() {
 				// pad cell_line to exactly the column width
 				std::string padded = cell_line;
 				padded.append(ctx.column_widths[col] - content_length, ' ');
+					
+				// If style formatter has been set for individual cell, then overwrite the row formatter
+				const std::string format_prefix = (cell_formatters[col].first ? cell_formatters[col].second.get_style_prefix() 
+						: row_formatter.get_style_prefix());
+				const std::string format_suffix = (cell_formatters[col].first ? cell_formatters[col].second.get_style_suffix()
+						: row_formatter.get_style_suffix());
 
-				std::cout << row_formatter.get_style_prefix()
+				std::cout << format_prefix 
 					<< std::string(default_right_spacing_, ' ')
 					<< std::string(cell_left_pad, ' ')
 					<< cell_line 
 					<< std::string(cell_right_pad, ' ')
 					<< std::string(default_right_spacing_, ' ')
-					<< row_formatter.get_style_suffix();
+					<< format_suffix; 
 
 				if (use_color_border_) {
 					std::cout << style_formatter_.get_style_prefix();

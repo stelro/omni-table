@@ -43,6 +43,7 @@ int main() {
 
     table[2][0] = 2;
     table[2][1] = "Honda";
+    table[2][1].set_cell_style(format::style::yellow | format::style::bold);
     table[2][2] = "Civic";
     table[2][3] = 2020;
     table[2][4] = 158;
@@ -59,6 +60,7 @@ int main() {
     table[4][1] = "Chevrolet Camaro";
     table[4][2] = "Silverado orestis is the best";
     table[4][3] = 2021;
+    table[4][3].set_cell_style(format::style::yellow | format::style::italic | format::style::faint);
     table[4][4] = 355;
     table[4][5] = "$36,195";
 
