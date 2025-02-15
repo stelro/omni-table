@@ -1,6 +1,11 @@
 #include "row.h"
 
 namespace gctable {
+
+Row::Row(std::initializer_list<Cell> r) {
+	cells_.insert(cells_.end(), r.begin(), r.end());
+}
+
 Cell &Row::operator[](std::size_t index) {
 
     if (index >= cells_.size()) {

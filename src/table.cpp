@@ -89,6 +89,10 @@ const Row &Table::operator[](size_t index) const {
 	return rows_[index];
 }
 
+void Table::add_row(const Row& row) {
+	rows_.push_back(row);
+}
+
 void Table::print_horizontal_line_(const Context& ctx, bool include_new_line) const {
 
 	if (table_border_style_ == BorderStyle::none) return;
@@ -134,9 +138,9 @@ Table::Context Table::compute_context_() {
 		for (std::size_t j = 0; j < cells.size(); ++j) {
 
 			// determine the wrapping limit
-			const std::size_t wrap_limit (max_column_width_ > 0 ? max_column_width_ : cells[j].content.size());
+			const std::size_t wrap_limit (max_column_width_ > 0 ? max_column_width_ : cells[j].get_content().size());
 			// wrap the cell content
-			auto wrapped = detail::wrap_text(cells[j].content, wrap_limit);
+			auto wrapped = detail::wrap_text(cells[j].get_content(), wrap_limit);
 			// compute the maximum line length in this cell
 			std::size_t effective_width = 0;
 			for (const auto& line : wrapped) {
@@ -197,7 +201,7 @@ void Table::print() {
 		for (std::size_t col = 0; col < ctx.number_of_all_columns; ++col) {
 			if (col < cells.size()) {
 				const std::size_t wrap_limit = ctx.column_widths[col];
-				cell_lines[col] = detail::wrap_text(cells[col].content, wrap_limit);
+				cell_lines[col] = detail::wrap_text(cells[col].get_content(), wrap_limit);
 			}
 			else {
 				cell_lines[col] = {""};
@@ -209,7 +213,7 @@ void Table::print() {
 		std::vector<std::pair<bool, format::Formatter>> cell_formatters(ctx.number_of_all_columns);
 		for (std::size_t col = 0; col < ctx.number_of_all_columns; ++col) {
 			if (col < cells.size())
-				cell_formatters[col] = {cells[col].style_formatter_set, cells[col].style_formatter_};
+				cell_formatters[col] = {cells[col].is_formatter_set(), cells[col].get_formatter()};
 		}
 
 		// print each "line" of the row

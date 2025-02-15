@@ -45,6 +45,8 @@ class Table {
 public:
     Row &operator[](size_t index);
     const Row &operator[](size_t index) const;
+
+	void add_row(const Row& row);
 	
 	// Print the actuall table
     void print();

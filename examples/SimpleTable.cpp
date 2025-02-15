@@ -20,26 +20,30 @@ int main() {
 	table.enable_border_style(format::style::red | format::style::faint);
 	table.enable_vertical_centering(true);
 
+	table.add_row({"No", "Make", "Model", "Year", "Hp", "Price", "xxx", "", "xxxxx"});
+
     // Header
-    table[0][0] = "No";
-    table[0][1] = "Make";
-    table[0][2] = "Model";
-    table[0][3] = "Year";
-    table[0][4] = "Hp";
-    table[0][5] = "Price";
-    table[0][6] = "";
+    /*table[0][0] = "No";*/
+    /*table[0][1] = "Make";*/
+    /*table[0][2] = "Model";*/
+    /*table[0][3] = "Year";*/
+    /*table[0][4] = "Hp";*/
+    /*table[0][5] = "Price";*/
+    /*table[0][6] = "";*/
 	
 	// Apply custom style to the whole row
 	table[0].set_row_style(format::style::green | format::style::bold);
-
+	Row second_row = {1, "Toyota", "Camry", 2018, 203, "$24,425"};
+	table.add_row(second_row);
+	table[1][2] = "OoOOo";
    
     // Cars table
-    table[1][0] = 1;
-    table[1][1] = "Toyota";
-    table[1][2] = "Camry";
-    table[1][3] = 2018;
-    table[1][4] = 203;
-    table[1][5] = "$24,425";
+    /*table[1][0] = 1;*/
+    /*table[1][1] = "Toyota";*/
+    /*table[1][2] = "Camry";*/
+    /*table[1][3] = 2018;*/
+    /*table[1][4] = 203;*/
+    /*table[1][5] = "$24,425";*/
 
     table[2][0] = 2;
     table[2][1] = "Honda";

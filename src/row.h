@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <initializer_list>
 
 #include "cell.h"
 #include "formatter.h"
@@ -9,6 +10,10 @@ namespace gctable {
 
 class Row {
 public:
+
+	Row() = default;
+	Row(std::initializer_list<Cell> cells);
+
 	// Automatically resizes if index is out of range.
     Cell &operator[](std::size_t index);
 
