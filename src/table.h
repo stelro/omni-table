@@ -7,20 +7,7 @@
 #include <vector>
 #include <cstdint>
 
-/*
- * table[0][0] = "cell 1"
- * table[0][1] = "cell 2"
- * table[0][2] = "cell 3"
- *
- * table[1][0] = "cell 4"
- * table[1][1] = "cell 5"
- * table[1][2] = "cell 6"
- *
- *	cell 1 | cell 2 | cell 3 |
- *	cell 4 | cell 5 | cell 6 |
- */
-
-namespace gctable {
+namespace omni {
 
 enum class Alignment { center, left, right };
 
@@ -116,5 +103,5 @@ private:
     
 };
 
-} // namespace cctable
+} // namespace omni 
 

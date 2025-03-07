@@ -3,7 +3,7 @@
 #include <type_traits>
 #include <string>
 
-namespace gctable::format {
+namespace omni::format {
 
 enum class style : int {
 	none		= 0 << 0,
@@ -60,4 +60,4 @@ private:
 	void compute_style_prefix_();
 };
 
-} // namespace gctable::format
+} // namespace omni::format

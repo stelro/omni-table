@@ -1,10 +1,10 @@
 #include "row.h"
 
-namespace gctable {
+#include <stdexcept>
 
-Row::Row(std::initializer_list<Cell> r) {
-	cells_.insert(cells_.end(), r.begin(), r.end());
-}
+namespace omni {
+
+Row::Row(std::initializer_list<Cell> r) { cells_.insert(cells_.end(), r.begin(), r.end()); }
 
 Cell &Row::operator[](std::size_t index) {
 

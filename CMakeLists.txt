@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(gc-table)
+project(omni-table)
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     if(CMAKE_SYSTEM_PROCESSOR MATCHES "x86")

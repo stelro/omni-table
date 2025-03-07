@@ -3,7 +3,7 @@
 #include <vector>
 #include <sstream>
 
-namespace gctable::format {
+namespace omni::format {
 
 void Formatter::compute_style_prefix_() {
 	std::vector<int> codes;
@@ -38,4 +38,4 @@ void Formatter::compute_style_prefix_() {
 	prefix_ = oss.str();
 }
 
-} // namespace gctable::format
+} // namespace omni::format

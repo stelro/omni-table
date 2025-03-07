@@ -13,7 +13,7 @@
 #define MCA_START __asm volatile("# LLVM-MCA-BEGIN");
 #define MCA_END __asm volatile("# LLVM-MCA-END");
 
-using namespace gctable;
+using namespace omni;
 
 static void BM_CreateNxNDynamicTable(benchmark::State& state) {
   

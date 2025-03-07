@@ -6,7 +6,7 @@
 
 #include "table.h"
 
-using namespace gctable;
+using namespace omni;
 
 namespace {
 

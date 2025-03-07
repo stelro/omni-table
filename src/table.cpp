@@ -76,7 +76,7 @@ std::vector<std::string> wrap_text(const std::string& text, size_t max_width) {
 
 } // namespace detail
 
-namespace gctable {
+namespace omni {
 
 Row &Table::operator[](size_t index) {
     if (index >= rows_.size()) {
@@ -210,10 +210,10 @@ void Table::print() {
 			row_height = std::max(row_height, cell_lines[col].size());
 		}
 
-		std::vector<std::pair<bool, format::Formatter>> cell_formatters(ctx.number_of_all_columns);
+		std::vector<Cell::CellFormat> cell_formatters(ctx.number_of_all_columns);
 		for (std::size_t col = 0; col < ctx.number_of_all_columns; ++col) {
 			if (col < cells.size())
-				cell_formatters[col] = {cells[col].is_formatter_set(), cells[col].get_formatter()};
+				cell_formatters[col] = cells[col].get_cell_format();
 		}
 
 		// print each "line" of the row
@@ -249,9 +249,11 @@ void Table::print() {
 				padded.append(ctx.column_widths[col] - content_length, ' ');
 					
 				// If style formatter has been set for individual cell, then overwrite the row formatter
-				const std::string format_prefix = (cell_formatters[col].first ? cell_formatters[col].second.get_style_prefix() 
+				const std::string format_prefix = (cell_formatters[col].style_formatter_set 
+						? cell_formatters[col].style_formatter.get_style_prefix() 
 						: row_formatter.get_style_prefix());
-				const std::string format_suffix = (cell_formatters[col].first ? cell_formatters[col].second.get_style_suffix()
+				const std::string format_suffix = (cell_formatters[col].style_formatter_set 
+						? cell_formatters[col].style_formatter.get_style_suffix()
 						: row_formatter.get_style_suffix());
 
 				std::cout << format_prefix 
@@ -265,7 +267,11 @@ void Table::print() {
 				if (use_color_border_) {
 					std::cout << style_formatter_.get_style_prefix();
 				}
-				std::cout << border_vertical_;
+				
+				if (cell_formatters[col].skip_border == false) {
+					std::cout << border_vertical_;
+				}
+
 				if (use_color_border_) {
 					std::cout << style_formatter_.get_style_suffix();
 				}
@@ -281,4 +287,4 @@ void Table::print() {
 	}
 }
 
-} // namespace cctable
+} // namespace omni 
