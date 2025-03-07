@@ -1,5 +1,8 @@
 omni-table
 ===========
+![Build status (main)](https://github.com/stelro/omni-table/actions/workflows/linux_ubuntu.yml/badge.svg)
+[![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
+
 
 Omni-table is a lightweight C++ library designed to effortlessly transform 
 your raw data into visually appealing ASCII grid tables directly in the console. 
