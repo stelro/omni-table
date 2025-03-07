@@ -4,6 +4,8 @@
 #include <cstdlib>
 #include <cstdio>
 
+#include <algorithm>
+
 #include "table.h"
 
 using namespace omni;
