@@ -28,6 +28,8 @@ function(add_gtest test_name test_file)
     include_directories(${includes})
     add_executable(${test_name} ${test_file} ${sources})
     target_link_libraries(${test_name} gtest_main ${libraries})
+
+if (NOT MSVC)
     target_compile_options(${test_name} PUBLIC
         -Wno-unused-parameter
         -Wno-unused-function
@@ -35,6 +37,7 @@ function(add_gtest test_name test_file)
         -Wno-double-promotion
         )
     add_test(NAME ${test_name} COMMAND ${test_name})
+endif()
 
 endfunction(add_gtest)
 
