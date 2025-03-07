@@ -55,7 +55,7 @@ TEST(TableTest, TextWrapping) {
     EXPECT_NE(output.find("ordWi"), std::string::npos);
     
     // Check that the output contains more than one line (wrapped text).
-    size_t newlineCount = std::count(output.begin(), output.end(), '\n');
+    size_t newlineCount = std::count_if(output.begin(), output.end(), [](char c) { return c == '\n'; });
     EXPECT_GT(newlineCount, 1);
 }
 
@@ -74,7 +74,8 @@ TEST(TableTest, VerticalCentering) {
     // Since vertical centering is enabled, the shorter cell ("Short")
     // should have blank lines (or extra vertical padding) in its area.
     // Here we simply check that the printed row spans multiple lines.
-    size_t newlineCount = std::count(output.begin(), output.end(), '\n');
+	size_t newlineCount = std::count_if(output.begin(), output.end(), [](char c) { return c == '\n'; });
+
     EXPECT_GT(newlineCount, 1);
 }
 
