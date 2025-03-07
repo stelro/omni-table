@@ -1,6 +1,8 @@
 omni-table
 ===========
 ![Build status (main)](https://github.com/stelro/omni-table/actions/workflows/linux_ubuntu.yml/badge.svg)
+![Build status (main)](https://github.com/stelro/omni-table/actions/workflows/macos-latest.yml/badge.svg)
+![Build status (main)](https://github.com/stelro/omni-table/actions/workflows/windows_latest.yml/badge.svg)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 
 
