@@ -11,7 +11,16 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
         set(ARCH_MCA64 TRUE)
         message(STATUS "Building for macOS 64-bit")
     endif()
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    if(CMAKE_SYSTEM_PROCESSOR MATCHES "AMD64")
+        set(ARCH_WIN64 TRUE)
+        message(STATUS "Building for Windows 64-bit")
+    elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "x86")
+        set(ARCH_WIN86 TRUE)
+        message(STATUS "Building for Windows x86")
+    endif()
 endif()
+
 
 
 set(CMAKE_CXX_STANDARD 23)
@@ -34,6 +43,10 @@ include(AddBenchmark)
 include(CompilerWarnings)
 include(Sanitizers)
 
+if (NOT MSVC)
+	include(AddBenchmark)
+endif()
+
 find_package(Threads REQUIRED)
 
 set_project_warnings(project_warnings)
@@ -41,7 +54,10 @@ enable_sanitizers(project_sanitizers)
 
 enable_testing()
 
-add_subdirectory(benchmark_test)
+if (NOT MSVC)
+	add_subdirectory(benchmark_test)
+endif()
+
 add_subdirectory(tests)
 add_subdirectory(examples)
 

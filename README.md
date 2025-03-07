@@ -127,12 +127,10 @@ Build the project on linux by using the *build.sh* script.
 ```
 ./build.sh [options]
 
+Build options:
 --dev : Builds only the Debug target with Address Sanitizer enabled (development build).
-
 --rel : Builds only the Release target.
-
 --no-clean : Prevents cleaning of existing build artifacts before building.
-
 --test : Runs the unit tests instead of building the project. Tests are expected to be found in the build/debug/tests directory.
 
 Simple usage:
