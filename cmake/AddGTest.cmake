@@ -29,15 +29,22 @@ function(add_gtest test_name test_file)
     add_executable(${test_name} ${test_file} ${sources})
     target_link_libraries(${test_name} gtest_main ${libraries})
 
-if (NOT MSVC)
-    target_compile_options(${test_name} PUBLIC
-        -Wno-unused-parameter
-        -Wno-unused-function
-        -Wno-unused-variable
-        -Wno-double-promotion
-        )
-    add_test(NAME ${test_name} COMMAND ${test_name})
-endif()
+	if(MSVC)
+		target_compile_options(${test_name} PUBLIC
+			/wd4100  # unreferenced formal parameter
+			/wd4101  # unreferenced local variable
+			/wd4505  # unreferenced local function has been removed
+		)
+	else()
+		target_compile_options(${test_name} PUBLIC
+			-Wno-unused-parameter
+			-Wno-unused-function
+			-Wno-unused-variable
+			-Wno-double-promotion
+		)
+	endif()
+
+	add_test(NAME ${test_name} COMMAND ${test_name})
 
 endfunction(add_gtest)
 
