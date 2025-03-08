@@ -1,8 +1,8 @@
 add_gtest(
-    SimpleTest 
-    SimpleTest.t.cpp
+    basic_table_test 
+    basic_table.t.cpp
 	LIB
-	gc-table
+	omni-table
 	INCLUDES
 	${CMAKE_SOURCE_DIR}/src
 )

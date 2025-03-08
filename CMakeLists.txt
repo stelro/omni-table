@@ -64,17 +64,17 @@ add_subdirectory(examples)
 # testing
 add_subdirectory(external/gtest)
 
-add_library(gc-table STATIC )
+add_library(omni-table STATIC )
 
-target_sources(gc-table PRIVATE 
+target_sources(omni-table PRIVATE 
     src/table.cpp
     src/cell.cpp
     src/row.cpp
 	src/formatter.cpp
     )
 
-target_link_libraries(gc-table PRIVATE project_warnings)
+target_link_libraries(omni-table PRIVATE project_warnings)
 
 if (ENABLE_SANITIZER_ADDRESS)
-    target_link_libraries(gc-table PRIVATE project_sanitizers)
+    target_link_libraries(omni-table PRIVATE project_sanitizers)
 endif()

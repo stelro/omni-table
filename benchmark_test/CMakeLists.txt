@@ -1,8 +1,8 @@
 add_benchmark(
-    TableBenchmark 
-    TableBenchmark.cpp
+    table_benchmark 
+    table_benchmark.cpp
     LIB
-    gc-table
+    omni-table
     INCLUDES
     ${CMAKE_SOURCE_DIR}/src
 )
