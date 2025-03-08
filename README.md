@@ -15,8 +15,7 @@ way to display tabular information, making data more accessible and easier to re
 Simple examples
 ---------------
 
-![alt
-text](https://github.com/stelro/omni-table/tree/main/banner/banner.png)
+![alt text](https://github.com/stelro/omni-table/blob/main/banner/banner.png)
 
 The following code demonstrates how to create a simple 5x3 grid table, populate it, and apply optional styling modifications.
 
