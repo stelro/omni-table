@@ -15,24 +15,9 @@ way to display tabular information, making data more accessible and easier to re
 Simple examples
 ---------------
 
-```
-+----+-----------+-----------+------+-----+---------+
-| No |   Make    |   Model   | Year | Hp  |  Price  |
-+----+-----------+-----------+------+-----+---------+
-| 1  |  Toyota   |   Camry   | 2018 | 203 | $24,425 |
-+----+-----------+-----------+------+-----+---------+
-| 2  |   Honda   |   Civic   | 2020 | 158 | $21,050 |
-+----+-----------+-----------+------+-----+---------+
-| 3  |   Ford    |  Mustang  | 2019 | 310 | $26,670 |
-+----+-----------+-----------+------+-----+---------+
-| 4  | Chevrolet | Silverado | 2021 | 355 | $36,195 |
-|    |  Camaro   |           |      |     |         |
-+----+-----------+-----------+------+-----+---------+
-| 5  |    BMW    | 3 Series  | 2022 | 255 | $41,450 |
-+----+-----------+-----------+------+-----+---------+
-| 6  |   Audi    |    A4     | 2017 | 190 | $34,900 |
-+----+-----------+-----------+------+-----+---------+
-```
+![alt
+text](https://github.com/stelro/omni-table/tree/main/banner/banner.png)
+
 The following code demonstrates how to create a simple 5x3 grid table, populate it, and apply optional styling modifications.
 
 ```c++
